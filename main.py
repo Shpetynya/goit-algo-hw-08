@@ -96,26 +96,27 @@ def birthdays(args, book):
 
 
 def save_data(book, filename="addressbook.pkl"):
-
+    """Функція для збереження даних у файл"""
     with open(filename, "wb") as f:
         pickle.dump(book, f)
 
 def load_data(filename="addressbook.pkl"):
-    try:
+    """Функція для загрузки файлу"""
+    try:   # Відкриваємо файл якщо він існує
         with open(filename, "rb") as f:
             return pickle.load(f)
     except FileNotFoundError:
-        return AddressBook()
+        return AddressBook()  # Повертаємось до поточної адресної книги якщо файл ще не існує
 
 def main():
-    book = load_data()
+    book = load_data() # Підгружаємо файл у головну функцію
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
         command, args = parse_input(user_input)
 
         if command in ["close", "exit"]:
-            save_data(book)
+            save_data(book)   # Якщо закриваємо бот, виконується автоматичне збереження файлу
             print("Good bye!")
             break
         elif command == "hello":
